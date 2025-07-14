@@ -1,0 +1,181 @@
+<div class="user-detail-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <button mat-icon-button (click)="goBack()" class="back-button">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        Chi tiết người dùng
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Đang tải thông tin người dùng...</p>
+      </div>
+
+      <div *ngIf="!isLoading && user" class="user-content">
+        <!-- Avatar Section -->
+        <div class="avatar-section">
+          <img [src]="user.avatarUrl || 'assets/default-avatar.png'" 
+               [alt]="user.fullName" 
+               class="user-avatar"
+               (error)="onImageError($event)">
+          <div class="avatar-info">
+            <h3>{{user.fullName}}</h3>
+            <p class="user-email">ID: {{user.id}}</p>
+            <span class="role-badge" [class]="'role-' + user.role.toLowerCase()">
+              {{user.role}}
+            </span>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Form Section -->
+        <form [formGroup]="userForm" class="user-form">
+          <div class="form-grid">
+            <!-- Email -->
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" 
+                     [readonly]="!isEditing"
+                     placeholder="Nhập email">
+              <mat-error *ngIf="userForm.get('email')?.hasError('required')">
+                Email là bắt buộc
+              </mat-error>
+              <mat-error *ngIf="userForm.get('email')?.hasError('email')">
+                Email không hợp lệ
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Full Name -->
+            <mat-form-field appearance="outline">
+              <mat-label>Họ và tên</mat-label>
+              <input matInput formControlName="fullName" 
+                     [readonly]="!isEditing"
+                     placeholder="Nhập họ và tên">
+              <mat-error *ngIf="userForm.get('fullName')?.hasError('required')">
+                Họ và tên là bắt buộc
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Avatar URL -->
+            <mat-form-field appearance="outline">
+              <mat-label>URL Avatar</mat-label>
+              <input matInput formControlName="avatarUrl" 
+                     [readonly]="!isEditing"
+                     placeholder="Nhập URL avatar">
+              <button matSuffix mat-icon-button 
+                      type="button"
+                      (click)="openImageUpload()"
+                      [disabled]="!isEditing || isLoading"
+                      matTooltip="Upload ảnh">
+                <mat-icon *ngIf="!isLoading">upload</mat-icon>
+                <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+              </button>
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field appearance="outline">
+              <mat-label>Mật khẩu mới</mat-label>
+              <input matInput formControlName="password" 
+                     [readonly]="!isEditing"
+                     type="password"
+                     placeholder="Để trống nếu không đổi mật khẩu">
+              <mat-hint>Chỉ nhập khi muốn đổi mật khẩu</mat-hint>
+            </mat-form-field>
+
+            <!-- Role -->
+            <mat-form-field appearance="outline">
+              <mat-label>Vai trò</mat-label>
+              <mat-select formControlName="role" [disabled]="!isEditing">
+                <mat-option *ngFor="let role of roles" [value]="role">
+                  {{role}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.get('role')?.hasError('required')">
+                Vai trò là bắt buộc
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Subscription Plan -->
+            <mat-form-field appearance="outline">
+              <mat-label>Gói đăng ký</mat-label>
+              <mat-select formControlName="subscriptionPlan" [disabled]="!isEditing">
+                <mat-option value="">Free</mat-option>
+                <mat-option *ngFor="let plan of subscriptionPlans" [value]="plan">
+                  {{plan}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- Subscription Expiry -->
+            <mat-form-field appearance="outline">
+              <mat-label>Ngày hết hạn gói</mat-label>
+              <input matInput [matDatepicker]="expiryPicker" 
+                     formControlName="subscriptionExpiry"
+                     [readonly]="!isEditing"
+                     placeholder="Chọn ngày hết hạn">
+              <mat-datepicker-toggle matSuffix [for]="expiryPicker" 
+                                    [disabled]="!isEditing"></mat-datepicker-toggle>
+              <mat-datepicker #expiryPicker></mat-datepicker>
+            </mat-form-field>
+
+            <!-- Is Active -->
+            <div class="toggle-field">
+              <mat-slide-toggle formControlName="isActive" 
+                               [disabled]="!isEditing"
+                               color="primary">
+                Tài khoản hoạt động
+              </mat-slide-toggle>
+            </div>
+          </div>
+
+          <!-- Read-only Information -->
+          <div class="readonly-info">
+            <mat-divider></mat-divider>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Ngày tạo:</label>
+                <span>{{user.createdAt | date:'dd/MM/yyyy HH:mm'}}</span>
+              </div>
+              <div class="info-item">
+                <label>Cập nhật lần cuối:</label>
+                <span>{{user.updatedAt | date:'dd/MM/yyyy HH:mm'}}</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-button (click)="goBack()">
+        <mat-icon>cancel</mat-icon>
+        Quay lại
+      </button>
+      
+      <ng-container *ngIf="!isEditing">
+        <button mat-raised-button color="primary" (click)="toggleEdit()">
+          <mat-icon>edit</mat-icon>
+          Chỉnh sửa
+        </button>
+      </ng-container>
+      
+      <ng-container *ngIf="isEditing">
+        <button mat-button (click)="cancelEdit()">
+          <mat-icon>cancel</mat-icon>
+          Hủy
+        </button>
+        <button mat-raised-button color="primary" 
+                (click)="saveUser()" 
+                [disabled]="isLoading || !userForm.valid">
+          <mat-icon>save</mat-icon>
+          {{isLoading ? 'Đang lưu...' : 'Lưu'}}
+        </button>
+      </ng-container>
+    </mat-card-actions>
+  </mat-card>
+</div> 

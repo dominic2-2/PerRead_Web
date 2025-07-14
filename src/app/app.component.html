@@ -1,0 +1,81 @@
+<mat-sidenav-container class="sidenav-container" *ngIf="!isLoginPage">
+  <mat-sidenav #drawer class="sidenav" mode="side" opened>
+    <mat-toolbar color="primary">
+      <mat-icon>menu_book</mat-icon>
+      <span style="margin-left: 8px;">PerRead</span>
+    </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item 
+         routerLink="/staff-home" 
+         routerLinkActive="active"
+         *ngIf="userRole === 'Staff'">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span matListItemTitle>Trang chủ</span>
+      </a>
+      <a mat-list-item 
+         routerLink="/dashboard" 
+         routerLinkActive="active"
+         *ngIf="userRole === 'Admin'">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+      <a mat-list-item 
+         routerLink="/books" 
+         routerLinkActive="active"
+         *ngIf="userRole === 'Staff'">
+        <mat-icon matListItemIcon>book</mat-icon>
+        <span matListItemTitle>Quản lý sách</span>
+      </a>
+      <a mat-list-item 
+         routerLink="/accounts" 
+         routerLinkActive="active"
+         *ngIf="userRole === 'Admin'">
+        <mat-icon matListItemIcon>people</mat-icon>
+        <span matListItemTitle>Quản lý tài khoản</span>
+      </a>
+      <a mat-list-item 
+         routerLink="/support" 
+         routerLinkActive="active"
+         *ngIf="userRole === 'Staff'">
+        <mat-icon matListItemIcon>help</mat-icon>
+        <span matListItemTitle>Hỗ trợ</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="drawer.toggle()" class="hide-desktop">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-icon-button (click)="drawer.toggle()" class="sidebar-toggle">
+        <mat-icon>{{ drawer.opened ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+      </button>
+      <span>Hệ thống quản lý PerRead</span>
+      <span class="spacer"></span>
+      <span class="user-info" *ngIf="currentUser">
+        <ng-container *ngIf="currentUser.avatarUrl; else defaultAvatar">
+          <img [src]="currentUser.avatarUrl" alt="avatar" class="avatar-img" />
+        </ng-container>
+        <ng-template #defaultAvatar>
+          <mat-icon>person</mat-icon>
+        </ng-template>
+        <span class="user-name">{{currentUser.fullName || 'Admin'}}</span>
+      </span>
+      <button mat-button (click)="logout();" routerLink="/auth/login">
+        <mat-icon>logout</mat-icon>
+        <span>Đăng xuất</span>
+      </button>
+    </mat-toolbar>
+    
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+    
+    <mat-toolbar color="primary" class="footer">
+      <span>© 2025 PerRead. All rights reserved.</span>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<router-outlet *ngIf="isLoginPage"></router-outlet>

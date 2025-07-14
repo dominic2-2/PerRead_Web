@@ -1,0 +1,311 @@
+/* Purple Gradient Material Theme - Đồng bộ với Login */
+.sidenav-container {
+  height: auto;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.sidenav {
+  width: 220px;
+  background: linear-gradient(180deg, #1976d2 0%, #2196f3 100%);
+  color: #fff;
+  box-shadow: 2px 0 8px #1976d214;
+  /* No border-radius for sharp corners */
+}
+
+.mat-toolbar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
+.mat-toolbar .spacer {
+  flex: 1 1 auto;
+}
+
+.mat-nav-list .mat-list-item {
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 4px;
+  margin: 4px 0;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+}
+.mat-nav-list .mat-list-item .mat-icon,
+.mat-nav-list .mat-list-item span[matListItemTitle],
+.mat-nav-list .mat-list-item .mdc-list-item__primary-text {
+  color: #fff !important;
+  transition: color 0.2s;
+  font-size: 18px;
+  font-weight: 500;
+}
+.mat-nav-list .mat-list-item:hover .mat-icon,
+.mat-nav-list .mat-list-item:hover span[matListItemTitle],
+.mat-nav-list .mat-list-item:hover .mdc-list-item__primary-text,
+.mat-nav-list .mat-list-item.active .mat-icon,
+.mat-nav-list .mat-list-item.active span[matListItemTitle],
+.mat-nav-list .mat-list-item.active .mdc-list-item__primary-text {
+  color: #ffd600 !important;
+}
+
+.main-content {
+  padding: 32px 24px 24px 24px;
+  min-height: 0;
+  background: #f5faff;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.06);
+  flex: 1 1 auto;
+}
+.sidenav-container, mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+}
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 -2px 8px rgba(25, 118, 210, 0.08);
+  position: static !important;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+/* Header toolbar styling */
+mat-sidenav-content > mat-toolbar {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  color: #333 !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Menu button styling */
+mat-sidenav-content > mat-toolbar button[mat-icon-button] {
+  color: #667eea;
+}
+
+mat-sidenav-content > mat-toolbar button[mat-icon-button]:hover {
+  background: rgba(102, 126, 234, 0.1);
+}
+
+/* Logout button styling */
+mat-sidenav-content > mat-toolbar button[mat-button] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 0px;
+  padding: 8px 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+mat-sidenav-content > mat-toolbar button[mat-button]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+  .sidenav {
+    width: 0;
+  }
+  .footer {
+    left: 0;
+  }
+  .main-content {
+    padding: 16px;
+    margin: 8px;
+  }
+  .hide-desktop {
+    display: inline-flex;
+  }
+}
+
+.hide-desktop {
+  display: none;
+}
+
+/* Smooth animations */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 126, 234, 0.5);
+}
+
+/* Active route styling */
+.mat-nav-list .mat-list-item[routerLinkActive] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* User info styling */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.avatar-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 1px 4px rgba(33,150,243,0.15);
+}
+.user-name {
+  font-weight: 500;
+  color: #1976d2;
+  /* or use #1565c0 for deeper blue */
+}
+.sidebar-toggle {
+  margin-right: 12px;
+  color: #fff;
+}
+@media (max-width: 800px) {
+  .sidebar-toggle {
+    margin-right: 0;
+  }
+}
+
+/* Icon styling trong sidebar */
+.mat-nav-list .mat-list-item mat-icon {
+  color: #667eea;
+  margin-right: 12px;
+  transition: color 0.3s ease;
+}
+
+.mat-nav-list .mat-list-item:hover mat-icon,
+.mat-nav-list .mat-list-item.active mat-icon {
+  color: white;
+}
+
+/* Header toolbar icon và text alignment */
+mat-sidenav-content > mat-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Logout button với icon */
+mat-sidenav-content > mat-toolbar button[mat-button] {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+mat-sidenav-content > mat-toolbar button[mat-button] mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Sidebar header với icon */
+.sidenav mat-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sidenav mat-toolbar mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+/* Mobile responsive cho user info */
+@media (max-width: 800px) {
+  .user-info {
+    display: none;
+  }
+  
+  mat-sidenav-content > mat-toolbar button[mat-button] span {
+    display: none;
+  }
+  
+  mat-sidenav-content > mat-toolbar button[mat-button] {
+    min-width: 40px;
+    padding: 8px;
+  }
+}
+
+/* Hover effects cho mobile menu button */
+@media (max-width: 800px) {
+  .hide-desktop {
+    display: inline-flex !important;
+  }
+  
+  mat-sidenav-content > mat-toolbar button[mat-icon-button] {
+    margin-right: 8px;
+  }
+}
+
+/* Animation cho sidebar toggle */
+.sidenav {
+  transition: width 0.3s ease;
+}
+
+/* Active state cho navigation items */
+.mat-nav-list .mat-list-item[routerLinkActive="active"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.mat-nav-list .mat-list-item[routerLinkActive="active"] mat-icon {
+  color: white !important;
+}
+
+/* Breadcrumb styling nếu cần */
+.breadcrumb {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Loading state */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(102, 126, 234, 0.1);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-spinner {
+  --mdc-circular-progress-active-indicator-color: #667eea;
+}

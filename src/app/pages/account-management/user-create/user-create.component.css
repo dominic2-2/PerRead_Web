@@ -1,0 +1,61 @@
+.user-create-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.user-form {
+  margin-top: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.toggle-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+.back-button {
+  margin-right: 8px;
+}
+
+mat-card-actions {
+  padding: 16px 24px;
+  gap: 8px;
+}
+
+/* Snackbar styles */
+::ng-deep .success-snackbar {
+  background: #4caf50;
+  color: white;
+}
+
+::ng-deep .success-snackbar .mat-simple-snackbar-action {
+  color: white;
+}
+
+::ng-deep .error-snackbar {
+  background: #f44336;
+  color: white;
+}
+
+::ng-deep .error-snackbar .mat-simple-snackbar-action {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .user-create-container {
+    padding: 16px;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+} 

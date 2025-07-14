@@ -1,0 +1,41 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo">
+        <mat-icon class="logo-icon">library_books</mat-icon>
+        <h1>PerRead</h1>
+      </div>
+      <p class="subtitle">Đăng nhập vào hệ thống quản lý</p>
+    </div>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Tên đăng nhập</mat-label>
+        <input matInput formControlName="username" required>
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Mật khẩu</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="hide ? 'Hiện mật khẩu' : 'Ẩn mật khẩu'" type="button">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      
+      <div *ngIf="errorMsg" class="error-message">
+        <mat-icon>error</mat-icon>
+        <span>{{errorMsg}}</span>
+      </div>
+      
+      <button mat-raised-button color="primary" class="login-button" type="submit" [disabled]="!loginForm.valid">
+        <mat-icon>login</mat-icon>
+        Đăng nhập
+      </button>
+    </form>
+    
+    <div class="login-footer">
+      <p>&copy; 2024 PerRead. All rights reserved.</p>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,129 @@
+<div class="user-create-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <button mat-icon-button (click)="cancel()" class="back-button">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        Tạo người dùng mới
+      </mat-card-title>
+      <mat-card-subtitle>
+        Điền thông tin để tạo tài khoản người dùng mới
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="userForm" class="user-form">
+        <div class="form-grid">
+          <!-- Email -->
+          <mat-form-field appearance="outline">
+            <mat-label>Email *</mat-label>
+            <input matInput formControlName="email" 
+                   placeholder="Nhập email"
+                   type="email">
+            <mat-error *ngIf="userForm.get('email')?.hasError('required')">
+              Email là bắt buộc
+            </mat-error>
+            <mat-error *ngIf="userForm.get('email')?.hasError('email')">
+              Email không hợp lệ
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Full Name -->
+          <mat-form-field appearance="outline">
+            <mat-label>Họ và tên *</mat-label>
+            <input matInput formControlName="fullName" 
+                   placeholder="Nhập họ và tên">
+            <mat-error *ngIf="userForm.get('fullName')?.hasError('required')">
+              Họ và tên là bắt buộc
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Avatar URL -->
+          <mat-form-field appearance="outline">
+            <mat-label>URL Avatar</mat-label>
+            <input matInput formControlName="avatarUrl" 
+                   placeholder="Nhập URL avatar (tùy chọn)">
+            <button matSuffix mat-icon-button 
+                    type="button"
+                    (click)="openImageUpload()"
+                    [disabled]="isLoading"
+                    matTooltip="Upload ảnh">
+              <mat-icon *ngIf="!isLoading">upload</mat-icon>
+              <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+            </button>
+            <mat-hint>Để trống để sử dụng avatar mặc định</mat-hint>
+          </mat-form-field>
+
+          <!-- Password -->
+          <mat-form-field appearance="outline">
+            <mat-label>Mật khẩu *</mat-label>
+            <input matInput formControlName="password" 
+                   type="password"
+                   placeholder="Nhập mật khẩu">
+            <mat-error *ngIf="userForm.get('password')?.hasError('required')">
+              Mật khẩu là bắt buộc
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Role -->
+          <mat-form-field appearance="outline">
+            <mat-label>Vai trò *</mat-label>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let role of roles" [value]="role">
+                {{role}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="userForm.get('role')?.hasError('required')">
+              Vai trò là bắt buộc
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Subscription Plan -->
+          <mat-form-field appearance="outline">
+            <mat-label>Gói đăng ký</mat-label>
+            <mat-select formControlName="subscriptionPlan">
+              <mat-option value="">Free</mat-option>
+              <mat-option *ngFor="let plan of subscriptionPlans" [value]="plan">
+                {{plan}}
+              </mat-option>
+            </mat-select>
+            <mat-hint>Tùy chọn - mặc định là Free</mat-hint>
+          </mat-form-field>
+
+          <!-- Subscription Expiry -->
+          <mat-form-field appearance="outline">
+            <mat-label>Ngày hết hạn gói</mat-label>
+            <input matInput [matDatepicker]="expiryPicker" 
+                   formControlName="subscriptionExpiry"
+                   placeholder="Chọn ngày hết hạn">
+            <mat-datepicker-toggle matSuffix [for]="expiryPicker"></mat-datepicker-toggle>
+            <mat-datepicker #expiryPicker></mat-datepicker>
+            <mat-hint>Chỉ cần thiết nếu có gói đăng ký</mat-hint>
+          </mat-form-field>
+
+          <!-- Is Active -->
+          <div class="toggle-field">
+            <mat-slide-toggle formControlName="isActive" color="primary">
+              Tài khoản hoạt động
+            </mat-slide-toggle>
+            <mat-hint>Tài khoản sẽ được kích hoạt ngay sau khi tạo</mat-hint>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-button (click)="cancel()">
+        <mat-icon>cancel</mat-icon>
+        Hủy
+      </button>
+      <button mat-raised-button color="primary" 
+              (click)="createUser()" 
+              [disabled]="isLoading || !userForm.valid">
+        <mat-icon>add</mat-icon>
+        {{isLoading ? 'Đang tạo...' : 'Tạo người dùng'}}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div> 
