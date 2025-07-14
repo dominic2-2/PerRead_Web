@@ -1,2 +1,17 @@
-<h2>Book Metadata</h2>
-<!-- Quản lý metadata sách ở đây --> 
+<h2 style="margin: 0 0 16px 0;">Quản lý metadata</h2>
+<mat-card>
+  <mat-card-header>
+    <mat-button-toggle-group [(ngModel)]="tab" name="tab" style="width: 100%;">
+      <mat-button-toggle value="author" style="flex: 1;">Tác giả</mat-button-toggle>
+      <mat-button-toggle value="category" style="flex: 1;">Thể loại</mat-button-toggle>
+      <mat-button-toggle value="publisher" style="flex: 1;">Nhà xuất bản</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container [ngSwitch]="tab">
+      <app-author-list *ngSwitchCase="'author'"></app-author-list>
+      <app-category-list *ngSwitchCase="'category'"></app-category-list>
+      <app-publisher-list *ngSwitchCase="'publisher'"></app-publisher-list>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

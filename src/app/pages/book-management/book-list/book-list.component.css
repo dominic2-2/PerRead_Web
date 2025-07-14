@@ -1,1 +1,6 @@
-/* Book List styles */ 
+/* Book List styles */
+.book-list-header {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+} 

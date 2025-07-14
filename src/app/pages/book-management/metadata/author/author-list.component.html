@@ -1,0 +1,88 @@
+<p></p>
+<div class="search-section compact">
+  <form [formGroup]="searchForm" class="search-form compact">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="search-field small-input" style="width: 100%">
+      <mat-label>Tìm kiếm theo tên hoặc email</mat-label>
+      <input matInput formControlName="keyword" placeholder="Nhập từ khóa...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </form>
+  <div style="display: flex; align-items: center; margin-left: auto;">
+    <button mat-raised-button color="primary" (click)="openCreateDialog()" class="small-btn">
+      <mat-icon>add</mat-icon>
+      Thêm tác giả
+    </button>
+  </div>
+</div>
+<div class="filters-section compact">
+  <form [formGroup]="filterForm" class="filters-form compact">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="small-input">
+      <mat-label>Năm sinh</mat-label>
+      <input matInput type="number" formControlName="birthYear" placeholder="Năm sinh">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="small-input">
+      <mat-label>Năm mất</mat-label>
+      <input matInput type="number" formControlName="deathYear" placeholder="Năm mất">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="small-input">
+      <mat-label>Sắp xếp</mat-label>
+      <mat-select formControlName="sortBy" (selectionChange)="onSortChange()">
+        <mat-option *ngFor="let option of sortOptions" [value]="option.value">{{option.label}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div style="display: flex; align-items: center; height: 100%;">
+      <mat-slide-toggle formControlName="desc" color="primary">
+        Giảm dần
+      </mat-slide-toggle>
+    </div>
+  </form>
+</div>
+<div *ngIf="isLoading" class="loading-container">
+  <mat-spinner diameter="32"></mat-spinner>
+  <p>Đang tải dữ liệu...</p>
+</div>
+<div class="table-container" *ngIf="!isLoading">
+  <table mat-table [dataSource]="dataSource" class="author-table compact">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let author"> {{author.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Tên </th>
+      <td mat-cell *matCellDef="let author"> {{author.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let author"> {{author.email}} </td>
+    </ng-container>
+    <ng-container matColumnDef="birthYear">
+      <th mat-header-cell *matHeaderCellDef> Năm sinh </th>
+      <td mat-cell *matCellDef="let author"> {{author.birthYear}} </td>
+    </ng-container>
+    <ng-container matColumnDef="deathYear">
+      <th mat-header-cell *matHeaderCellDef> Năm mất </th>
+      <td mat-cell *matCellDef="let author"> {{author.deathYear}} </td>
+    </ng-container>
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef> Ngày tạo </th>
+      <td mat-cell *matCellDef="let author"> {{author.createdAt | date:'dd/MM/yyyy HH:mm'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Thao tác </th>
+      <td mat-cell *matCellDef="let author">
+        <button mat-icon-button color="primary" (click)="openDetailDialog(author)" matTooltip="Xem chi tiết">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteAuthor(author)" matTooltip="Xóa">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [length]="totalItems"
+                 [pageSizeOptions]="[5, 10, 25, 50]"
+                 showFirstLastButtons
+                 (page)="onPageChange()"></mat-paginator>
+</div> 

@@ -37,7 +37,7 @@
         <form [formGroup]="userForm" class="user-form">
           <div class="form-grid">
             <!-- Email -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Email</mat-label>
               <input matInput formControlName="email" 
                      [readonly]="!isEditing"
@@ -51,7 +51,7 @@
             </mat-form-field>
 
             <!-- Full Name -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Họ và tên</mat-label>
               <input matInput formControlName="fullName" 
                      [readonly]="!isEditing"
@@ -62,7 +62,7 @@
             </mat-form-field>
 
             <!-- Avatar URL -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>URL Avatar</mat-label>
               <input matInput formControlName="avatarUrl" 
                      [readonly]="!isEditing"
@@ -78,7 +78,7 @@
             </mat-form-field>
 
             <!-- Password -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Mật khẩu mới</mat-label>
               <input matInput formControlName="password" 
                      [readonly]="!isEditing"
@@ -88,7 +88,7 @@
             </mat-form-field>
 
             <!-- Role -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Vai trò</mat-label>
               <mat-select formControlName="role" [disabled]="!isEditing">
                 <mat-option *ngFor="let role of roles" [value]="role">
@@ -101,7 +101,7 @@
             </mat-form-field>
 
             <!-- Subscription Plan -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Gói đăng ký</mat-label>
               <mat-select formControlName="subscriptionPlan" [disabled]="!isEditing">
                 <mat-option value="">Free</mat-option>
@@ -112,7 +112,7 @@
             </mat-form-field>
 
             <!-- Subscription Expiry -->
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Ngày hết hạn gói</mat-label>
               <input matInput [matDatepicker]="expiryPicker" 
                      formControlName="subscriptionExpiry"

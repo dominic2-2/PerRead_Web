@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'add', component: BookFormComponent, canActivate: [StaffGuard] },
   { path: 'edit/:id', component: BookFormComponent, canActivate: [StaffGuard] },
   { path: 'detail/:id', component: BookDetailComponent, canActivate: [StaffGuard] },
-  { path: 'metadata/:id', component: MetadataComponent, canActivate: [StaffGuard] }
+  { path: 'metadata', component: MetadataComponent, canActivate: [StaffGuard] }
 ];
 
 @NgModule({
