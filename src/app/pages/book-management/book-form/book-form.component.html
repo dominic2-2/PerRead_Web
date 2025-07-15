@@ -1,4 +1,128 @@
-<h2>Book Form</h2>
-<form>
-  <!-- Form nhập thông tin sách -->
-</form> 
+<mat-card class="book-form-card">
+  <form [formGroup]="bookForm" class="book-form">
+    <h2 class="book-form-title">Tạo sách mới</h2>
+    <div class="book-form-main-row">
+      <div class="book-form-main-col">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tên sách</mat-label>
+          <input matInput formControlName="title" required>
+        </mat-form-field>
+        <!-- Tác giả -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Chọn tác giả</mat-label>
+          <mat-select formControlName="authorIds" multiple>
+            <div class="search-input-wrapper">
+              <input matInput placeholder="Tìm tác giả..." [(ngModel)]="authorSearch" (ngModelChange)="onAuthorSearch($event)" [ngModelOptions]="{standalone: true}" />
+            </div>
+            <mat-option *ngFor="let author of filteredAuthors" [value]="author.id">
+              {{author.name}} <span *ngIf="author.birthYear">({{author.birthYear}})</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- Thể loại -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Chọn thể loại</mat-label>
+          <mat-select formControlName="categoryIds" multiple>
+            <div class="search-input-wrapper">
+              <input matInput placeholder="Tìm thể loại..." [(ngModel)]="categorySearch" (ngModelChange)="onCategorySearch($event)" [ngModelOptions]="{standalone: true}" />
+            </div>
+            <mat-option *ngFor="let category of filteredCategories" [value]="category.id">
+              {{category.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="book-form-grid">
+          <!-- Nhà xuất bản -->
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Chọn nhà xuất bản</mat-label>
+            <mat-select formControlName="publisherId">
+              <div class="search-input-wrapper">
+                <input matInput placeholder="Tìm NXB..." [(ngModel)]="publisherSearch" (ngModelChange)="onPublisherSearch($event)" [ngModelOptions]="{standalone: true}" />
+              </div>
+              <mat-option *ngFor="let publisher of filteredPublishers" [value]="publisher.id">
+                {{publisher.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- Ngôn ngữ -->
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Chọn ngôn ngữ</mat-label>
+            <mat-select formControlName="language">
+              <div class="search-input-wrapper">
+                <input matInput placeholder="Tìm ngôn ngữ..." [(ngModel)]="languageSearch" (ngModelChange)="onLanguageSearch($event)" [ngModelOptions]="{standalone: true}" />
+              </div>
+              <mat-option *ngFor="let lang of filteredLanguages" [value]="lang.name">
+                {{lang.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Phiên bản</mat-label>
+            <input matInput formControlName="edition">
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>ISBN</mat-label>
+            <input matInput formControlName="isbn">
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Số trang</mat-label>
+            <input matInput type="number" formControlName="pages">
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Giá *</mat-label>
+            <input matInput type="number" formControlName="price" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Trạng thái</mat-label>
+            <mat-select formControlName="availability">
+              <mat-option [value]="true">Đang bán</mat-option>
+              <mat-option [value]="false">Ngừng bán</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Tags (phẩy cách)</mat-label>
+            <input matInput formControlName="tags">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="book-form-side-col">
+        <div class="book-form-cover-block">
+          <div class="book-form-cover-row">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="book-form-cover-link">
+              <mat-label>Link ảnh bìa</mat-label>
+              <input matInput formControlName="coverUrl" placeholder="Dán link ảnh...">
+              <button matSuffix mat-icon-button type="button" (click)="clearCoverUrl()" matTooltip="Xóa link"><mat-icon>close</mat-icon></button>
+            </mat-form-field>
+            <button mat-icon-button type="button" (click)="coverUploadInput.click()" matTooltip="Upload ảnh bìa">
+              <mat-icon>upload</mat-icon>
+            </button>
+            <input #coverUploadInput type="file" accept="image/*" class="book-form-cover-upload" (change)="onCoverChange($event)">
+          </div>
+          <img *ngIf="bookForm.value.coverUrl || coverPreview" [src]="coverPreview || bookForm.value.coverUrl" alt="cover" class="book-form-cover-preview">
+        </div>
+        <div class="book-form-file-block">
+          <div class="book-form-file-row">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="book-form-cover-link">
+              <mat-label>Link file sách</mat-label>
+              <input matInput formControlName="fileUrl" placeholder="Dán link file...">
+              <button matSuffix mat-icon-button type="button" (click)="clearFileUrl()" *ngIf="bookForm.value.fileUrl" matTooltip="Xóa link"><mat-icon>close</mat-icon></button>
+            </mat-form-field>
+            <button mat-icon-button type="button" (click)="fileUploadInput.click()" matTooltip="Upload file sách">
+              <mat-icon>upload</mat-icon>
+            </button>
+            <input #fileUploadInput type="file" accept=".epub" class="book-form-file-upload" (change)="onFileChange($event)">
+          </div>
+          <span *ngIf="fileName" class="book-form-file-name">{{ fileName }}</span>
+        </div>
+      </div>
+      <mat-form-field appearance="outline" class="full-width" subscriptSizing="dynamic">
+        <mat-label>Tóm tắt</mat-label>
+        <textarea matInput formControlName="summary"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="book-form-actions">
+      <button mat-stroked-button color="primary" type="button" (click)="backToList()">Quay lại</button>
+      <button mat-raised-button color="primary" type="button" (click)="save()" [disabled]="isSaving">Tạo mới</button>
+    </div>
+  </form>
+</mat-card>

@@ -1,7 +1,120 @@
-<div class="book-list-header">
-  <button mat-raised-button color="primary" routerLink="/books/metadata">
-    <mat-icon>settings</mat-icon>
-    Quản lý metadata
-  </button>
+<h2 style="margin: 0 0 16px 0;">Quản lý sách</h2>
+<div class="book-list-header" style="display: flex; align-items: center; gap: 12px; width: 100%;">
+  <form [formGroup]="searchForm" class="search-form compact" style="flex: 1 1 0; max-width: 320px; margin: 0;">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="search-field small-input" style="width: 100%; margin: 0;">
+      <mat-label>Tìm kiếm theo thông tin sách</mat-label>
+      <input matInput formControlName="keyword" placeholder="Nhập từ khóa...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </form>
+  <div style="display: flex; gap: 12px; flex: 0 0 auto; margin-left: auto;">
+    <button mat-raised-button color="primary" (click)="goToAdd()">
+      <mat-icon>add</mat-icon>
+      Thêm sách mới
+    </button>
+    <button mat-stroked-button color="primary" (click)="toggleFilter()">
+      <mat-icon>filter_list</mat-icon>
+      {{ showFilter ? 'Ẩn lọc' : 'Lọc nâng cao' }}
+    </button>
+    <button mat-stroked-button color="accent" routerLink="/books/metadata">
+      <mat-icon>settings</mat-icon>
+      Quản lý metadata
+    </button>
+  </div>
 </div>
-<!-- Danh sách sách sẽ hiển thị ở đây --> 
+
+<div *ngIf="showFilter" class="filter-section" style="margin: 16px 0;">
+  <form [formGroup]="filterForm" style="display: flex; flex-wrap: wrap; gap: 8px;">
+    <mat-form-field appearance="outline" style="width: 160px;">
+      <mat-label>Sắp xếp</mat-label>
+      <mat-select formControlName="sortBy">
+        <mat-option *ngFor="let opt of sortOptions" [value]="opt.value">{{ opt.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 120px;">
+      <mat-label>Thứ tự</mat-label>
+      <mat-select formControlName="sortDir">
+        <mat-option value="asc">Tăng dần</mat-option>
+        <mat-option value="desc">Giảm dần</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 120px;">
+      <mat-label>Trạng thái</mat-label>
+      <mat-select formControlName="availability">
+        <mat-option value="">Tất cả</mat-option>
+        <mat-option [value]="true">Đang bán</mat-option>
+        <mat-option [value]="false">Ngừng bán</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 120px;">
+      <mat-label>Giá từ</mat-label>
+      <input matInput type="number" formControlName="priceMin" min="0">
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 120px;">
+      <mat-label>Giá đến</mat-label>
+      <input matInput type="number" formControlName="priceMax" min="0">
+    </mat-form-field>
+  </form>
+</div>
+
+<mat-card style="margin-top: 16px;">
+  <div *ngIf="isLoading" style="text-align: center; padding: 32px 0;">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div *ngIf="!isLoading">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z1" matSort (matSortChange)="onSortChange()">
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên sách</th>
+        <td mat-cell *matCellDef="let book">{{ book.title }}</td>
+      </ng-container>
+      <ng-container matColumnDef="authors">
+        <th mat-header-cell *matHeaderCellDef>Tác giả</th>
+        <td mat-cell *matCellDef="let book">
+          {{ getAuthorNames(book) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="publisher">
+        <th mat-header-cell *matHeaderCellDef>NXB</th>
+        <td mat-cell *matCellDef="let book">
+          {{ book.publisher?.name }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="categories">
+        <th mat-header-cell *matHeaderCellDef>Thể loại</th>
+        <td mat-cell *matCellDef="let book">
+          {{ getCategoryNames(book) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Giá</th>
+        <td mat-cell *matCellDef="let book">{{ book.price | number:'1.0-0' }} đ</td>
+      </ng-container>
+      <ng-container matColumnDef="availability">
+        <th mat-header-cell *matHeaderCellDef>Trạng thái</th>
+        <td mat-cell *matCellDef="let book">
+          <span [ngClass]="book.availability ? 'text-success' : 'text-danger'">
+            {{ book.availability ? 'Đang bán' : 'Hết hàng' }}
+          </span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tạo</th>
+        <td mat-cell *matCellDef="let book">{{ book.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Thao tác</th>
+        <td mat-cell *matCellDef="let book">
+          <button mat-icon-button color="primary" (click)="goToDetail(book)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteBook(book)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange()"></mat-paginator>
+  </div>
+</mat-card> 

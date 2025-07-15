@@ -1,1 +1,147 @@
-/* Book Form styles */ 
+/* Book Form styles */
+
+.book-form-card {
+    max-width: 700px;
+    margin: 0 auto;
+    margin-top: 24px;
+  }
+  
+  .book-form {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .book-form-title {
+    margin: 0 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  .book-form-main-row {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  
+  .book-form-main-col {
+    flex: 1;
+  }
+  
+  .book-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+  }
+  
+  .book-form-side-col {
+    flex: 0 0 180px;
+    max-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .book-form-label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: block;
+  }
+  
+  .book-form-cover-block {
+    margin-bottom: 16px;
+  }
+  
+  .book-form-cover-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .book-form-cover-link {
+    flex: 1 1 0;
+    margin: 0;
+  }
+  
+  .book-form-cover-upload {
+    display: none;
+  }
+  
+  .book-form-cover-preview {
+    max-width: 120px;
+    max-height: 160px;
+    display: block;
+    margin-top: 8px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+  }
+  
+  .book-form-file-block {
+    margin-bottom: 16px;
+  }
+  
+  .book-form-file-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  
+  .book-form-file-upload {
+    display: none;
+  }
+  
+  .book-form-file-name {
+    font-size: 13px;
+    color: #666;
+  }
+  
+  .book-form-actions {
+    margin-top: 20px;
+    text-align: right;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+  
+  @media (max-width: 700px) {
+    .book-form-main-row {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .book-form-side-col {
+      flex: 1 1 100%;
+      max-width: 100%;
+      min-width: 0;
+      flex-direction: row;
+      gap: 16px;
+    }
+    .book-form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+.search-input-wrapper {
+  padding: 4px;
+  background: #fafbfc;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.search-input-wrapper input[matinput] {
+  width: 100%;
+  min-width: 120px;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+}

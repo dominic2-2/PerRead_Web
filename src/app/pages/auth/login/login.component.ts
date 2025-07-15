@@ -52,7 +52,7 @@ export class LoginComponent {
               window.location.href = '/dashboard';
               break;
             case 'Staff':
-              window.location.href = '/dashboard/staff-home';
+              window.location.href = '/staff-home';
               break;
             default:
               window.location.href = '/home';

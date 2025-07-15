@@ -13,7 +13,7 @@ export function roleGuard(allowedRoles: string[]): CanActivateFn {
     if (!allowedRoles.includes(user.role)) {
       // Nếu là staff thì về staff-home, nếu không thì về dashboard
       if (user.role === 'Staff') {
-        router.navigate(['/dashboard/staff-home']);
+        router.navigate(['/staff-home']);
       } else {
         router.navigate(['/dashboard']);
       }
