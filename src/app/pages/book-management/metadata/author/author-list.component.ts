@@ -90,7 +90,7 @@ export class AuthorListComponent implements OnInit {
     this.filterForm = this.fb.group({
       birthYear: [''],
       deathYear: [''],
-      sortBy: ['created_at-desc'],
+      sortBy: ['created_at'],
       desc: [true]
     });
   }

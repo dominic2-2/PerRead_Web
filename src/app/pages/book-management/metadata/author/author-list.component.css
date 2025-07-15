@@ -17,10 +17,18 @@
   gap: 8px;
 }
 
-.filters-section.compact {
+.filters-section {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.filters-section.compact {
+  padding: 12px;
   margin-bottom: 12px;
 }
 
