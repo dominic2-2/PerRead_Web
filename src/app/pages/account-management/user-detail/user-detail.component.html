@@ -18,7 +18,7 @@
       <div *ngIf="!isLoading && user" class="user-content">
         <!-- Avatar Section -->
         <div class="avatar-section">
-          <img [src]="user.avatarUrl || 'assets/default-avatar.png'" 
+          <img [src]="user.avatarUrl || 'default-avatar.png'" 
                [alt]="user.fullName" 
                class="user-avatar"
                (error)="onImageError($event)">

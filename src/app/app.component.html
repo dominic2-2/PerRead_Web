@@ -60,7 +60,7 @@
         <ng-template #defaultAvatar>
           <mat-icon>person</mat-icon>
         </ng-template>
-        <span class="user-name">{{currentUser.fullName || 'Admin'}}</span>
+        <span class="user-name">{{currentUser.fullName || 'Unknown'}}</span>
       </span>
       <button mat-button (click)="logout();" routerLink="/auth/login">
         <mat-icon>logout</mat-icon>

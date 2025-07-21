@@ -263,7 +263,7 @@ export class UserDetailComponent implements OnInit {
   onImageError(event: Event) {
     const img = event.target as HTMLImageElement;
     if (img) {
-      img.src = 'assets/default-avatar.png';
+      img.src = 'default-avatar.png';
     }
   }
 

@@ -66,7 +66,7 @@ export class UserCreateComponent {
   ) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      fullName: ['', Validators.required],
+      fullName: [''],
       avatarUrl: [''],
       role: ['', Validators.required],
       isActive: [true],

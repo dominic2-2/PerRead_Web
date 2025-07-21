@@ -14,7 +14,7 @@ export function roleGuard(allowedRoles: string[]): CanActivateFn {
       // Nếu là staff thì về staff-home, nếu không thì về dashboard
       if (user.role === 'Staff') {
         router.navigate(['/staff-home']);
-      } else {
+      } else if (user.role === 'Admin') {
         router.navigate(['/dashboard']);
       }
       return false;

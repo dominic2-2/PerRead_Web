@@ -83,7 +83,7 @@
           <th mat-header-cell *matHeaderCellDef> Người dùng </th>
           <td mat-cell *matCellDef="let user">
             <div class="user-info">
-              <img [src]="user.avatarUrl || 'assets/default-avatar.png'" 
+              <img [src]="user.avatarUrl || 'default-avatar.png'" 
                    [alt]="user.fullName" 
                    class="user-avatar"
                    (error)="onImageError($event)">
